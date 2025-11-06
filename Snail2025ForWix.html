@@ -6,50 +6,36 @@
   <title>SnailMount</title>
   <script src="https://viewer.marmoset.co/main/marmoset.js"></script>
   <style>
-    /* no page chrome, no color */
+    /* Zero chrome, zero margins, zero color */
     html, body {
       margin: 0;
       height: 100%;
-      background: transparent; /* stays transparent inside Wix, white on raw page */
+      background: transparent;   /* stays transparent inside Wix */
     }
 
-    /* full-width container; cap if you want */
-    .container {
-      width: 100%;
-      max-width: 1920px;   /* optional: remove if you want true full-bleed */
-      margin: 0 auto;
-      padding: 0;
-    }
-
-    /* THIS is the magic: exact 16:9 box with zero extra space */
-    .viewer {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;     /* 1920x1080 proportion */
-      /* If you want a target height on desktop, you can cap it: */
-      max-height: 600px;        /* remove this line if you don't want the 600 cap */
-    }
-
-    /* marmoset mounts here and fills perfectly */
+    /* The ONLY box, exactly 16:9, no background */
     #viewer {
-      position: absolute;
-      inset: 0;
+      width: 100vw;                          /* full-bleed width */
+      height: calc(100vw * 9 / 16);          /* perfect 16:9 height */
+      max-height: 100vh;                     /* don't exceed viewport height */
+      background: transparent;               /* kill any box color */
+    }
+
+    /* Optional: cap size on huge monitors
+       (remove these two lines if you want true full-bleed always) */
+    @media (min-width: 1920px) {
+      #viewer { width: 1920px; height: 1080px; margin: 0 auto; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="viewer">
-      <div id="viewer"></div>
-    </div>
-  </div>
-
+  <div id="viewer"></div>
   <script>
     marmoset.embed('Snail2025ForWix.mview', {
       target: document.getElementById('viewer'),
       autoStart: true,
-      fullFrame: false,
-      pagePreset: false  // minimal UI; avoids extra built-in margins
+      pagePreset: false,
+      fullFrame: false
     });
   </script>
 </body>
