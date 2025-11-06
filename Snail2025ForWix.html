@@ -2,53 +2,54 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0"/>
   <title>SnailMount</title>
   <script src="https://viewer.marmoset.co/main/marmoset.js"></script>
-
   <style>
+    /* no page chrome, no color */
     html, body {
-      height: 100%;
       margin: 0;
-      background: transparent;
+      height: 100%;
+      background: transparent; /* stays transparent inside Wix, white on raw page */
     }
 
-    /* Outer wrapper centers & caps height at 600 */
-    .wrap {
+    /* full-width container; cap if you want */
+    .container {
       width: 100%;
-      max-height: 600px;
+      max-width: 1920px;   /* optional: remove if you want true full-bleed */
       margin: 0 auto;
-      position: relative;
+      padding: 0;
     }
 
-    /* ratio box — 16:9 (1080/1920 = 0.5625 = 56.25%) */
-    .ratio {
+    /* THIS is the magic: exact 16:9 box with zero extra space */
+    .viewer {
+      position: relative;
       width: 100%;
-      padding-top: 56.25%;
-      position: relative;
+      aspect-ratio: 16 / 9;     /* 1920x1080 proportion */
+      /* If you want a target height on desktop, you can cap it: */
+      max-height: 600px;        /* remove this line if you don't want the 600 cap */
     }
 
-    /* viewer container fills ratio area */
+    /* marmoset mounts here and fills perfectly */
     #viewer {
       position: absolute;
       inset: 0;
     }
   </style>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="ratio">
+  <div class="container">
+    <div class="viewer">
       <div id="viewer"></div>
     </div>
   </div>
 
   <script>
     marmoset.embed('Snail2025ForWix.mview', {
-      target: document.getElementById("viewer"),
+      target: document.getElementById('viewer'),
       autoStart: true,
       fullFrame: false,
-      pagePreset: true
+      pagePreset: false  // minimal UI; avoids extra built-in margins
     });
   </script>
 </body>
